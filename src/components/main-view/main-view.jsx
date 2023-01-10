@@ -46,7 +46,8 @@ class MainView extends React.Component {
   getPanos(token) {
     // We use axios library to fetch data from our API
     axios
-      .get('http://localhost:8080/panos', {
+      // .get('http://localhost:8080/panos', {
+      .get('https://best360ies.herokuapp.com/panos', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -77,7 +78,7 @@ class MainView extends React.Component {
     localStorage.setItem('role', authData.user.role);
     localStorage.setItem('email', authData.user.email);
     localStorage.setItem('birthday', authData.user.birthday);
-    localStorage.setItem('favoritePanos', authData.user.favoritePanos);
+    // localStorage.setItem("favoritePanos", authData.user.favoritePanos);
 
     // Will trigger the getPanos function to fetch panos from the API
     this.getPanos(authData.token);

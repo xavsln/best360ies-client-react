@@ -16,8 +16,9 @@ const accessToken = localStorage.getItem('token');
 const addPanoToFavList = (pano) => {
   axios
     .post(
-      `http://localhost:8080/users/${currentUserId}/panos/${pano._id}`,
-      // { user: currentUser },
+      // `http://localhost:8080/users/${currentUserId}/panos/${pano._id}`,
+      `https://best360ies.herokuapp.com/users/${currentUserId}/panos/${pano._id}`,
+      { user: currentUser },
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }

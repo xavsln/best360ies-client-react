@@ -60,7 +60,8 @@ export class AddPano extends React.Component {
 
     if (confirmActionMessage) {
       axios.post(
-        `http://localhost:8080/panos/users/${this.currentUserId}`,
+        // `http://localhost:8080/panos/users/${this.currentUserId}`,
+        `https://best360ies.herokuapp.com/panos/users/${this.currentUserId}`,
         {
           panoUrl: panoDetails.panoUrl,
           googlePanoId: panoDetails.googlePanoId,

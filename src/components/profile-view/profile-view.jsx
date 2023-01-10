@@ -38,7 +38,8 @@ export function ProfileView(props) {
 
   const getUser = () => {
     axios
-      .get(`http://localhost:8080/users/${currentUserId}`, {
+      // .get(`http://localhost:8080/users/${currentUserId}`, {
+      .get(`https://best360ies.herokuapp.com/users/${currentUserId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((response) => {
@@ -70,7 +71,8 @@ export function ProfileView(props) {
     );
     if (confirmActionMessage) {
       axios.delete(
-        `http://localhost:8080/users/${currentUserId}/panos/${p_id}`,
+        // `http://localhost:8080/users/${currentUserId}/panos/${p_id}`,
+        `https://best360ies.herokuapp.com/users/${currentUserId}/panos/${p_id}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -94,7 +96,8 @@ export function ProfileView(props) {
     );
     if (confirmActionMessage) {
       axios.delete(
-        `http://localhost:8080/panos/${p_id}/users/${currentUserId}`,
+        // `http://localhost:8080/panos/${p_id}/users/${currentUserId}`,
+        `https://best360ies.herokuapp.com/panos/${p_id}/users/${currentUserId}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -118,7 +121,8 @@ export function ProfileView(props) {
       'Are you sure you want to deregister from Best360ies?'
     );
     if (confirmActionMessage) {
-      axios.delete(`http://localhost:8080/users/${user_id}`, {
+      // axios.delete(`http://localhost:8080/users/${user_id}`, {
+      axios.delete(`https://best360ies.herokuapp.com/users/${user_id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log('User removed');

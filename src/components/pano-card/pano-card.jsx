@@ -9,7 +9,7 @@ import axios from 'axios';
 export class PanoCard extends React.Component {
   constructor(props) {
     super(props);
-    this.testVariable = 'this is a test'; // I declare the variable here
+    this.currentUser = localStorage.getItem('user');
     this.currentUserId = localStorage.getItem('_id');
     this.accessToken = localStorage.getItem('token');
   }
@@ -25,12 +25,16 @@ export class PanoCard extends React.Component {
 
     if (confirmActionMessage) {
       axios.post(
-        `http://localhost:8080/users/${this.currentUserId}/panos/${p_id}`,
+        // `http://localhost:8080/users/${this.currentUserId}/panos/${p_id}`,
+        `https://best360ies.herokuapp.com/users/${this.currentUserId}/panos/${p_id}`,
+        { user: this.currentUser },
         {
           headers: { Authorization: `Bearer ${this.accessToken}` },
         }
       );
-
+      console.log(
+        `https://best360ies.herokuapp.com/users/${this.currentUserId}/panos/${p_id}`
+      );
       console.log('Pano added');
 
       alert('Pano successfully added to the list of favorites.');

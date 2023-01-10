@@ -39,7 +39,8 @@ export function LoginView(props) {
     const isReq = validate();
     if (isReq) {
       axios
-        .post('http://localhost:8080/login', {
+        // .post('http://localhost:8080/login', {
+        .post('https://best360ies.herokuapp.com/login', {
           username: username,
           password: password,
         })
