@@ -19,7 +19,7 @@
   "homepage": "https://github.com/xavsln/best360ies-client-react#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "geojson-places": "^1.0.3",
+   
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",

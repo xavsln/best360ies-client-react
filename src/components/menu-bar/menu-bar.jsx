@@ -51,7 +51,7 @@ export function MenuBar({ user }) {
             <Nav className="ms-auto">
               <Nav.Link href="/">Home |</Nav.Link>
 
-              <Nav.Link href="/addpano">Add a Pano |</Nav.Link>
+              {/* <Nav.Link href="/addpano">Add a Pano |</Nav.Link> */}
 
               {!isloggedin() && <Nav.Link href="/">Login |</Nav.Link>}
               {!isloggedin() && <Nav.Link href="/register">Sign-up</Nav.Link>}
