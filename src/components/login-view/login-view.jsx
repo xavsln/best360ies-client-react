@@ -55,10 +55,11 @@ export function LoginView(props) {
   };
 
   return (
-    <Container>
-      <Row className="align-items-center" height="100vh">
-        <Col>
-          <Card style={{ width: '30rem', margin: '5rem auto' }}>
+    <Container fluid>
+      <Row className="justify-content-md-center" height="100vh">
+        <Col md={8}>
+          <Card style={{ margin: '5rem auto' }}>
+            {/* width: '30rem',  */}
             <Card.Header className="text-center font-weight-bold">
               <h2>Login</h2>
             </Card.Header>
