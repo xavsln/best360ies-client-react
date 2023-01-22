@@ -16,6 +16,12 @@ import './profile-view.scss';
 export function ProfileView(props) {
   // console.log('Props from ProfileView: ', props);
 
+  const emptyPano = {
+    staticImgUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg',
+    country: 'Pano does not exist / was removed',
+  };
+
   const panos = props.panos;
 
   const currentUser = localStorage.getItem('user');
@@ -39,7 +45,7 @@ export function ProfileView(props) {
   const getUser = () => {
     axios
       // .get(`http://localhost:8080/users/${currentUserId}`, {
-      .get(`https://best360ies.herokuapp.com/users/${currentUserId}`, {
+      .get(`https://best360ies-api.herokuapp.com/users/${currentUserId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((response) => {
@@ -72,7 +78,7 @@ export function ProfileView(props) {
     if (confirmActionMessage) {
       axios.delete(
         // `http://localhost:8080/users/${currentUserId}/panos/${p_id}`,
-        `https://best360ies.herokuapp.com/users/${currentUserId}/panos/${p_id}`,
+        `https://best360ies-api.herokuapp.com/users/${currentUserId}/panos/${p_id}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -97,7 +103,7 @@ export function ProfileView(props) {
     if (confirmActionMessage) {
       axios.delete(
         // `http://localhost:8080/panos/${p_id}/users/${currentUserId}`,
-        `https://best360ies.herokuapp.com/panos/${p_id}/users/${currentUserId}`,
+        `https://best360ies-api.herokuapp.com/panos/${p_id}/users/${currentUserId}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -122,7 +128,7 @@ export function ProfileView(props) {
     );
     if (confirmActionMessage) {
       // axios.delete(`http://localhost:8080/users/${user_id}`, {
-      axios.delete(`https://best360ies.herokuapp.com/users/${user_id}`, {
+      axios.delete(`https://best360ies-api.herokuapp.com/users/${user_id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log('User removed');
@@ -192,37 +198,101 @@ export function ProfileView(props) {
               </Card.Title>
               <Row>
                 {favoritePanos.map((panoId) => {
+                  {
+                    /* We check that the panoId exists */
+                    /* If the panoId exists, we get the data from the database */
+                    /* Else, we show an empty pano to the User so he is aware that the pano was removed by the Owner */
+                  }
+
+                  {
+                    /* let pano = checkPanoExist(panoId); */
+                  }
+
+                  {
+                    /* let pano = panos.find((p) => p._id === panoId); */
+                  }
+
                   let pano = panos.find((p) => p._id === panoId);
 
-                  return (
-                    <Col
-                      xs={12}
-                      md={6}
-                      lg={3}
-                      className="fav-pano"
-                      key={pano._id}
-                    >
-                      <Figure>
-                        <Link to={`panos/${pano._id}`}>
+                  console.log('List of pano: ', pano);
+
+                  {
+                    /* if (pano === undefined) {
+                    console.log('This pano is undefined');
+                  } */
+                  }
+
+                  if (pano !== undefined) {
+                    pano = panos.find((p) => p._id === panoId);
+
+                    return (
+                      <Col
+                        xs={12}
+                        md={6}
+                        lg={3}
+                        className="fav-pano"
+                        key={pano._id}
+                      >
+                        <Figure>
+                          <Link to={`panos/${pano._id}`}>
+                            <Figure.Image
+                              width={256}
+                              height={256}
+                              alt={pano.country}
+                              src={pano.staticImgUrl}
+                              crossOrigin="anonymous"
+                            />
+                            <Figure.Caption>{pano.country}</Figure.Caption>
+                            <Figure.Caption>{pano.areaName}</Figure.Caption>
+                          </Link>
+                          <Button
+                            variant="warning"
+                            onClick={() => removeFav(pano._id)}
+                          >
+                            Remove from list
+                          </Button>
+                        </Figure>
+                      </Col>
+                    );
+                  } else {
+                    {
+                      /* pano.staticImgUrl =
+                      'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+                    pano.country = emptyPano.country; */
+                    }
+
+                    return (
+                      <Col
+                        xs={12}
+                        md={6}
+                        lg={3}
+                        className="fav-pano"
+                        key={panoId}
+                      >
+                        <Figure>
                           <Figure.Image
                             width={256}
                             height={256}
-                            alt={pano.country}
-                            src={pano.staticImgUrl}
+                            // alt={pano.country}
+                            alt={emptyPano.country}
+                            // src={pano.staticImgUrl}
+                            src={emptyPano.staticImgUrl}
                             crossOrigin="anonymous"
                           />
-                          <Figure.Caption>{pano.country}</Figure.Caption>
-                          <Figure.Caption>{pano.areaName}</Figure.Caption>
-                        </Link>
-                        <Button
-                          variant="warning"
-                          onClick={() => removeFav(pano._id)}
-                        >
-                          Remove from list
-                        </Button>
-                      </Figure>
-                    </Col>
-                  );
+                          {/* <Figure.Caption>{pano.country}</Figure.Caption> */}
+                          <Figure.Caption>{emptyPano.country}</Figure.Caption>
+                          {/* <Figure.Caption>{pano.areaName}</Figure.Caption> */}
+
+                          <Button
+                            variant="warning"
+                            onClick={() => removeFav(panoId)}
+                          >
+                            Remove from list
+                          </Button>
+                        </Figure>
+                      </Col>
+                    );
+                  }
                 })}
               </Row>
             </Card.Body>

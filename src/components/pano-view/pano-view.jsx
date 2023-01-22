@@ -7,36 +7,41 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
-const currentUser = localStorage.getItem('user');
-
-const currentUserId = localStorage.getItem('_id');
-
-const accessToken = localStorage.getItem('token');
-
-const addPanoToFavList = (pano) => {
-  axios
-    .post(
-      // `http://localhost:8080/users/${currentUserId}/panos/${pano._id}`,
-      `https://best360ies.herokuapp.com/users/${currentUserId}/panos/${pano._id}`,
-      { user: currentUser },
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    )
-    .then((response) => {
-      const data = response.data;
-      localStorage.setItem('favoritePanos', data.favoritePanos);
-
-      alert('Pano added to the list of favorites!');
-      // window.open('/', '_self');
-    })
-    .catch((err) => {
-      console.error(err);
-      alert('Unable to add pano to the list of favorite panos!');
-    });
-};
-
 export class PanoView extends React.Component {
+  constructor() {
+    super();
+    this.currentUser = localStorage.getItem('user');
+    this.currentUserId = localStorage.getItem('_id');
+    this.accessToken = localStorage.getItem('token');
+
+    this.addPanoToFavList = this.addPanoToFavList.bind(this);
+  }
+
+  addPanoToFavList = (pano, userID) => {
+    // console.log('currentUserId: ', userID);
+    axios
+      .post(
+        // `http://localhost:8080/users/${userID}/panos/${pano._id}`,
+        `https://best360ies-api.herokuapp.com/users/${userID}/panos/${pano._id}`,
+        { userId: userID },
+        {
+          headers: { Authorization: `Bearer ${this.accessToken}` },
+        }
+      )
+      .then((response) => {
+        const data = response.data;
+        // localStorage.setItem('favoritePanos', data.favoritePanos);
+
+        alert('Pano added to the list of favorites!');
+        // window.open('/', '_self');
+      })
+      .catch((err) => {
+        console.error(err);
+
+        alert('Unable to add pano to the list of favorite panos!');
+      });
+  };
+
   render() {
     const { pano, onBackClick } = this.props;
 
@@ -56,6 +61,13 @@ export class PanoView extends React.Component {
         </Col>
 
         <Col md={7}>
+          <div className="pano-description text-justify mb-1">
+            <span className="label font-weight-bold">Title: </span>
+            <span className="value">
+              <b>{pano.title}</b>
+            </span>
+          </div>
+
           <div className="pano-title mb-1">
             <span className="label font-weight-bold">Country: </span>
             <span className="value">{pano.country}</span>
@@ -76,14 +88,19 @@ export class PanoView extends React.Component {
             <span className="value">{pano.longitude}</span>
           </div>
 
+          <div className="pano-description text-justify mb-1">
+            <span className="label font-weight-bold">Experiences: </span>
+            <span className="value">{pano.experiences}</span>
+          </div>
+
           <br />
           <br />
 
           <div className="mb-3">
             <Button
-              variant="success"
+              variant="warning"
               onClick={() => {
-                addPanoToFavList(pano);
+                this.addPanoToFavList(pano, this.currentUserId);
               }}
             >
               Add pano to Favorites

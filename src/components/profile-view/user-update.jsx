@@ -58,7 +58,7 @@ export function UserUpdate(props) {
       axios
         .put(
           // `http://localhost:8080/users/${props.user._id}`,
-          `https://best360ies.herokuapp.com/users/${props.user._id}`,
+          `https://best360ies-api.herokuapp.com/users/${props.user._id}`,
           {
             username: username,
             password: password,

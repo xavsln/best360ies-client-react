@@ -1,0 +1,41 @@
+.accordion {
+  margin-bottom: 1rem;
+}
+
+.accordion-body {
+  // padding-left: 0%;
+  --bs-accordion-body-padding-x: 0;
+  --bs-accordion-body-padding-y: 0;
+}
+
+.link-nav-experiences {
+  color: DimGray;
+  text-decoration: none;
+}
+
+.link-nav-experiences:hover {
+  color: DimGray;
+  text-decoration: underline;
+}
+
+ul {
+  padding-top: 0.8rem;
+  list-style-type: square;
+}
+
+li {
+  /* Default bullets style erased */
+  list-style: none;
+}
+
+li::before {
+  /* Unicode for a bullet */
+  content: '\25AA';
+
+  /* Styles for Indentation*/
+  color: DimGray;
+
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}

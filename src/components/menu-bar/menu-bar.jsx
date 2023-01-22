@@ -48,7 +48,7 @@ export function MenuBar({ user }) {
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
+            <Nav className="ms-auto">
               <Nav.Link href="/">Home |</Nav.Link>
 
               <Nav.Link href="/addpano">Add a Pano |</Nav.Link>

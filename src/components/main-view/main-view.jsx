@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import PropTypes from 'prop-types';
@@ -18,10 +19,21 @@ import { LoginView } from '../login-view/login-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { AddPano } from '../add-pano/add-pano';
+import { PanosExperience } from '../panos-experience/panos-experience';
 
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Accordion,
+  Badge,
+  Table,
+} from 'react-bootstrap';
+
+import './main-view.scss';
 
 class MainView extends React.Component {
   constructor() {
@@ -47,7 +59,7 @@ class MainView extends React.Component {
     // We use axios library to fetch data from our API
     axios
       // .get('http://localhost:8080/panos', {
-      .get('https://best360ies.herokuapp.com/panos', {
+      .get('https://best360ies-api.herokuapp.com/panos', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -116,10 +128,181 @@ class MainView extends React.Component {
 
                 return (
                   <>
-                    <Col xl={12} className="mb-3">
-                      <VisibilityFilterInput />
+                    <Container>
+                      <Row>
+                        <Col xl={12} className="mb-3">
+                          <VisibilityFilterInput />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={3}>
+                          <Accordion defaultActiveKey="0">
+                            <Accordion.Item eventKey="0">
+                              <Accordion.Header>
+                                Cultural Attractions
+                              </Accordion.Header>
+                              <Accordion.Body>
+                                <ul>
+                                  <li>
+                                    <Link
+                                      to="/experiences/iconic landmarks"
+                                      className="link-nav-experiences"
+                                    >
+                                      Iconic Landmarks
+                                    </Link>
+                                  </li>
+
+                                  <li>
+                                    <Link
+                                      to="/experiences/great museums"
+                                      className="link-nav-experiences"
+                                    >
+                                      Great Museums
+                                    </Link>
+                                  </li>
+
+                                  {/* <li>
+                                    <Link
+                                      to="/experiences/world heritage sites"
+                                      className="link-nav-experiences"
+                                    >
+                                      World Heritage sites
+                                    </Link>
+                                  </li> */}
+                                </ul>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="1">
+                              <Accordion.Header>
+                                Natural Attractions
+                              </Accordion.Header>
+                              <Accordion.Body>
+                                <ul>
+                                  {/* <li>
+                                    <Link
+                                      to="/experiences/highest mountains"
+                                      className="link-nav-experiences"
+                                    >
+                                      Highest Mountains
+                                    </Link>
+                                  </li> */}
+
+                                  {/* <li>
+                                    <Link
+                                      to="/experiences/natural wonders"
+                                      className="link-nav-experiences"
+                                    >
+                                      Natural Wonders
+                                    </Link>
+                                  </li> */}
+
+                                  <li>
+                                    <Link
+                                      to="/experiences/famous waterfalls"
+                                      className="link-nav-experiences"
+                                    >
+                                      Famous waterfalls
+                                    </Link>
+                                  </li>
+
+                                  <li>
+                                    <Link
+                                      to="/experiences/famous beaches"
+                                      className="link-nav-experiences"
+                                    >
+                                      Famous beaches
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="2">
+                              <Accordion.Header>
+                                Man-made Attractions
+                              </Accordion.Header>
+                              <Accordion.Body>
+                                <ul>
+                                  <li>
+                                    <Link
+                                      to="/experiences/famous castles"
+                                      className="link-nav-experiences"
+                                    >
+                                      Famous Castles
+                                    </Link>
+                                  </li>
+
+                                  <li>
+                                    <Link
+                                      to="/experiences/famous bridges"
+                                      className="link-nav-experiences"
+                                    >
+                                      Famous Bridges
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
+                        </Col>
+                        <Col md={9}>
+                          <Row>
+                            <PanosList panos={panos} />
+                          </Row>
+                        </Col>
+                      </Row>
+                    </Container>
+
+                    {/* <PanosList panos={panos} /> */}
+                  </>
+                );
+              }}
+            />
+
+            {/* ======================================================= */}
+            {/* Read Panos corresponding to a specific experience route */}
+            {/* ======================================================= */}
+
+            <Route
+              path="/experiences/:experienceName"
+              render={({ match, history }) => {
+                if (!user)
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                     </Col>
-                    <PanosList panos={panos} />
+                  );
+
+                if (panos.length === 0)
+                  return <div className="main-view"></div>;
+
+                console.log('panos: ', panos);
+
+                let panoExperience = panos.filter(
+                  (p) => p.experiences[0] === match.params.experienceName
+                );
+
+                console.log('selection:', panoExperience);
+
+                return (
+                  <>
+                    <Container>
+                      <Row className="justify-content-center">
+                        <Col md={9}>
+                          <Row>
+                            <PanosExperience
+                              panos={panoExperience}
+                              onBackClick={() => history.goBack()}
+                            />
+                            {/* <PanosList panos={panoExperience} /> */}
+                          </Row>
+                        </Col>
+                        {/* <Button onBackClick={() => history.goBack()}>
+                          Back
+                        </Button> */}
+                      </Row>
+                      <br />
+                      <br />
+                    </Container>
                   </>
                 );
               }}

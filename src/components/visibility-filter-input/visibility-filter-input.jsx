@@ -12,7 +12,7 @@ function VisibilityFilterInput(props) {
       controlid="formFilter"
       onChange={(e) => props.setFilter(e.target.value)}
       value={props.visibilityFilterReducer}
-      placeholder="filter"
+      placeholder="filter by country name"
     />
   );
 }

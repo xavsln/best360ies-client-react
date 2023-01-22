@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Badge } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
+import './pano-card.scss';
 
 export class PanoCard extends React.Component {
   constructor(props) {
@@ -26,15 +29,15 @@ export class PanoCard extends React.Component {
     if (confirmActionMessage) {
       axios.post(
         // `http://localhost:8080/users/${this.currentUserId}/panos/${p_id}`,
-        `https://best360ies.herokuapp.com/users/${this.currentUserId}/panos/${p_id}`,
+        `https://best360ies-api.herokuapp.com/users/${this.currentUserId}/panos/${p_id}`,
         { user: this.currentUser },
         {
           headers: { Authorization: `Bearer ${this.accessToken}` },
         }
       );
-      console.log(
-        `https://best360ies.herokuapp.com/users/${this.currentUserId}/panos/${p_id}`
-      );
+      // console.log(
+      //   `https://best360ies-api.herokuapp.com/users/${this.currentUserId}/panos/${p_id}`
+      // );
       console.log('Pano added');
 
       alert('Pano successfully added to the list of favorites.');
@@ -62,14 +65,30 @@ export class PanoCard extends React.Component {
         </div>
 
         <Card.Body>
-          <Card.Title>{pano.country}</Card.Title>
+          <Card.Title className="countryCardTitle">{pano.country}</Card.Title>
           <Card.Text>{pano.areaName}</Card.Text>
-          <Link to={`/panos/${pano._id}`}>
-            <Button variant="link">See details</Button>
-          </Link>
-          <Button variant="warning" onClick={() => this.addToFav(pano._id)}>
+          <Card.Text>
+            <Link
+              to={`/experiences/${pano.experiences[0]}`}
+              // className="link-nav-experiences"
+            >
+              <Badge bg="primary">{pano.experiences[0]}</Badge>
+            </Link>
+          </Card.Text>
+          <div>
+            <Link to={`/panos/${pano._id}`}>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                className="details-btn"
+              >
+                See details
+              </Button>
+            </Link>
+          </div>
+          {/* <Button variant="warning" onClick={() => this.addToFav(pano._id)}>
             Add to Favorites
-          </Button>
+          </Button> */}
         </Card.Body>
       </Card>
     );

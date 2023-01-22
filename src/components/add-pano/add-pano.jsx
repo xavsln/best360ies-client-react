@@ -21,6 +21,13 @@ export class AddPano extends React.Component {
     this.addImage = this.addImage.bind(this);
     this.currentUserId = localStorage.getItem('_id');
     this.accessToken = localStorage.getItem('token');
+
+    this.state = {
+      inputExperienceValue: '',
+      inputTitleValue: '',
+    };
+
+    this.handleAdditionalData = this.handleAdditionalData.bind(this);
   }
 
   // =================================
@@ -61,7 +68,7 @@ export class AddPano extends React.Component {
     if (confirmActionMessage) {
       axios.post(
         // `http://localhost:8080/panos/users/${this.currentUserId}`,
-        `https://best360ies.herokuapp.com/panos/users/${this.currentUserId}`,
+        `https://best360ies-api.herokuapp.com/panos/users/${this.currentUserId}`,
         {
           panoUrl: panoDetails.panoUrl,
           googlePanoId: panoDetails.googlePanoId,
@@ -72,6 +79,8 @@ export class AddPano extends React.Component {
           country: panoDetails.country,
           areaName: panoDetails.areaName,
           staticImgUrl: panoDetails.staticImgUrl,
+          experiences: panoDetails.experiences,
+          title: panoDetails.title,
         },
         {
           headers: { Authorization: `Bearer ${this.accessToken}` },
@@ -139,6 +148,28 @@ export class AddPano extends React.Component {
   // . The heading
   // . The pitch
   // These data will then be used in the upcoming functions
+
+  handleAdditionalData(event) {
+    event.preventDefault();
+    console.log(
+      'Clicked on the Experience Button',
+      this.state.inputExperienceValue
+    );
+    let experienceName = this.state.inputExperienceValue;
+    panoDetails.experiences = [];
+    console.log('panoDetails.experiences: ', panoDetails.experiences);
+    panoDetails.experiences.push(experienceName);
+    console.log('panoDetails.experiences: ', panoDetails.experiences);
+    document.getElementById('experienceName').innerText = experienceName;
+
+    let title = this.state.inputTitleValue;
+    // panoDetails.title = '';
+    panoDetails.title = title;
+    console.log('Title: ', panoDetails.title);
+    document.getElementById('title').innerText = title;
+
+    console.log('panoDetails: ', panoDetails);
+  }
 
   processURL(event) {
     console.log('Function is triggered');
@@ -426,9 +457,63 @@ export class AddPano extends React.Component {
             <br />
           </Container>
 
+          <br />
+
+          <hr />
+          <h2>Step 3 : Add further details to this Panoramic Photo.</h2>
+          <br />
+          <Container>
+            <Row className="justify-content-md-center">
+              <Col>
+                <Form>
+                  <Form.Group
+                    className="mb-3"
+                    // controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>Experience name:</Form.Label>
+                    <Form.Control
+                      id="pano-experienceName"
+                      type="text"
+                      value={this.state.inputExperienceValue}
+                      placeholder="Enter Experience name here"
+                      onChange={(event) => {
+                        this.setState({
+                          inputExperienceValue:
+                            event.target.value.toLowerCase(),
+                        });
+                      }}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3"
+                    // controlId="exampleForm.ControlTextarea1"
+                  >
+                    <Form.Label>Pano title:</Form.Label>
+                    <Form.Control
+                      id="pano-title"
+                      type="text"
+                      value={this.state.inputTitleValue}
+                      placeholder="Enter pano title here"
+                      onChange={(event) => {
+                        this.setState({
+                          inputTitleValue: event.target.value,
+                        });
+                      }}
+                    />
+                  </Form.Group>
+                </Form>
+
+                <Button type="submit" onClick={this.handleAdditionalData}>
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+            <br />
+          </Container>
+
           <hr />
           <h2>
-            Step 3 : Check static image of the 360 to be added to the collection
+            Step 4 : Check static image of the 360 to be added to the collection
             as well as associated data extracted from the url
           </h2>
 
@@ -515,6 +600,18 @@ export class AddPano extends React.Component {
                       <td>Picth:</td>
                       <td>
                         <span id="pitch"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Experience:</td>
+                      <td>
+                        <span id="experienceName"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Title:</td>
+                      <td>
+                        <span id="title"></span>
                       </td>
                     </tr>
                   </tbody>

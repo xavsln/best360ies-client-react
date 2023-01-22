@@ -58,7 +58,7 @@ export function RegistrationView(props) {
     if (isReq) {
       axios
         // .post('http://localhost:8080/users', {
-        .post('https://best360ies.herokuapp.com/users', {
+        .post('https://best360ies-api.herokuapp.com/users', {
           username: username,
           password: password,
           email: email,
