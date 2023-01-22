@@ -18,7 +18,7 @@ import { PanoView } from '../pano-view/pano-view';
 import { LoginView } from '../login-view/login-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { AddPano } from '../add-pano/add-pano';
+// import { AddPano } from '../add-pano/add-pano';
 import { PanosExperience } from '../panos-experience/panos-experience';
 
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
@@ -343,12 +343,14 @@ class MainView extends React.Component {
             {/* New Pano creation route */}
             {/* ======================= */}
 
-            <Route
+            {/* Route add pano excluded from this version for now */}
+
+            {/* <Route
               path="/addpano"
               render={() => {
                 return <AddPano />;
               }}
-            />
+            /> */}
 
             {/* =========================== */}
             {/* New User Registration route */}
